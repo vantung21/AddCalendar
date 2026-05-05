@@ -87,9 +87,6 @@
     <Compile Include="reminder.cs">
       <DependentUpon>calendarDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="sysdiagram.cs">
-      <DependentUpon>calendarDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="user.cs">
       <DependentUpon>calendarDB.tt</DependentUpon>
     </Compile>

@@ -26,6 +26,7 @@ namespace AddCalendarAppointment.VIEW
 
             dataGridView1.DataSource = calendarBLL.loadAppointment(radioButton.Text);
             dataGridView1.Columns["Id"].Visible = false;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -43,6 +44,7 @@ namespace AddCalendarAppointment.VIEW
                 if(result)
                 {   
                     dataGridView1.DataSource = calendarBLL.loadAppointment(radioGroup.Checked ? radioGroup.Text : radioAppoint.Text);
+                    dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 }
                 MessageBox.Show(result ? "Appointment removed successfully." : "Failed to remove appointment.");
             }

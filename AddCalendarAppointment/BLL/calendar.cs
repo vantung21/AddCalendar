@@ -44,7 +44,7 @@ namespace AddCalendarAppointment.BLL
                 .AsEnumerable()
                 .Select(p => new appointmentView()
                 {
-                    Id = p.user_id ?? 0,
+                    Id = p.id,
                     Title = p.title,
                     Time = p.start_time?.ToString("dd/MM/yyyy HH:mm") ?? string.Empty,
                 }).ToList();
@@ -58,7 +58,7 @@ namespace AddCalendarAppointment.BLL
         {
             //kiểm tra xem có cuộc hẹn nào của userID bị trùng với khoảng thời gian đã chọn hay không
             var conflict = entity.appointments
-                .Where(a => a.id == userID && a.start_time < endTime && a.end_time > startTime)
+                .Where(a => a.user_id == userID && a.start_time < endTime && a.end_time > startTime)
                 .FirstOrDefault();
             if (conflict != null)
             {
@@ -91,14 +91,13 @@ namespace AddCalendarAppointment.BLL
             return (0, -1); //không có cuộc hẹn hoặc cuộc họp nhóm nào bị trùng
         }
 
-        public bool addAppointment(string title, string location, string reminder, string type, DateTime startTime, DateTime endTime)
+        public bool addAppointment(string title, string location, string reminderStr, string type, DateTime startTime, DateTime endTime)
         {
             try
             {
                 appointment newAppointment = new appointment()
                 {
                     user_id = userID,
-                    createdBy = userID,
                     title = title,
                     location = location,
                     is_group_meeting = (type == "GroupMeeting"),
@@ -108,7 +107,7 @@ namespace AddCalendarAppointment.BLL
                 entity.appointments.Add(newAppointment);
                 entity.SaveChanges();
 
-                addReminder(newAppointment.id, 15);
+                addReminder(newAppointment.id, reminderStr);
 
                 if (type == "GroupMeeting")
                 {
@@ -123,7 +122,7 @@ namespace AddCalendarAppointment.BLL
             }
         }
 
-        public bool addReminder(int appointmentId, int reminderTime)
+        public bool addReminder(int appointmentId, string reminderTime)
         {
             try
             {

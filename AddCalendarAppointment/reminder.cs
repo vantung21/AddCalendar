@@ -16,7 +16,7 @@ namespace AddCalendarAppointment
     {
         public int id { get; set; }
         public Nullable<int> appointment_id { get; set; }
-        public Nullable<int> minutes_before { get; set; }
+        public string minutes_before { get; set; }
     
         public virtual appointment appointment { get; set; }
     }

@@ -13,7 +13,17 @@ namespace AddCalendarAppointment.BLL
 
         public appointment getAppointmentDetail(int appointmentId)
         {
-            return entity.appointments.FirstOrDefault(a => a.id == appointmentId && a.user_id == userID);
+            var app = entity.appointments.FirstOrDefault(a => a.id == appointmentId);
+            if (app != null)
+            {
+                if (app.user_id == userID) return app;
+                if (app.is_group_meeting == true)
+                {
+                    bool isMember = entity.members.Any(m => m.appointment_id == appointmentId && m.user_id == userID);
+                    if (isMember) return app;
+                }
+            }
+            return null;
         }
 
         public List<string> getGroupMeetingMembers(int appointmentId)
@@ -32,7 +42,7 @@ namespace AddCalendarAppointment.BLL
         public string loadRemider(int appointmentId)
         {
             var reminder = entity.reminders.FirstOrDefault(r => r.appointment_id == appointmentId);
-            return reminder != null ? $"Reminder: {reminder.minutes_before} minutes before" : "No reminder set";
+            return reminder != null ? reminder.minutes_before.ToString() : string.Empty;
         }
 
     }

@@ -44,6 +44,7 @@ namespace AddCalendarAppointment.VIEW
             }
             List<string> members = appointmentBLL.getGroupMeetingMembers(appointmentId);
             dataGridView1.DataSource = members.Select(m => new { Name = m }).ToList();
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
         }
 
         private void button2_Click(object sender, EventArgs e)

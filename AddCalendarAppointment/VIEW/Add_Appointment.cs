@@ -17,16 +17,23 @@ namespace AddCalendarAppointment.VIEW
         {
             InitializeComponent();
             loadReminder();
+
+            // Đặt giờ mặc định bắt đầu là 7:00 và kết thúc là 8:00
+            DateTime today = DateTime.Today;
+            startTime1.Value = today.AddHours(7);
+            endTime1.Value = today.AddHours(8);
         }
 
         public void loadReminder()
         {
             comboBox1.Items.AddRange(new string[] 
             {
-                "5 phút trước", 
-                "10 phút trước", 
-                "15 phút trước",
-                "30 phút trước",
+                "trước 30 phút",
+                "trước 1 giờ",
+                "trước 2 giờ",
+                "trước 1 ngày",
+                 "trước 2 ngày",
+                 "trước 1 tuần"
             });
         }
 
@@ -49,13 +56,6 @@ namespace AddCalendarAppointment.VIEW
             string reminder = comboBox1.SelectedItem.ToString();
             string type = radioButton1.Checked ? "Appointment" : "GroupMeeting";
 
-
-            // kiểm tra nếu thời gian bắt đầu lớn hơn thời gian kết thúc hay không
-            if (startTime1.Value >= endTime2.Value)
-            {
-                MessageBox.Show("Thời gian bắt đầu phải nhỏ hơn thời gian kết thúc", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
 
             DateTime startTime = startTime2.Value.Date + startTime1.Value.TimeOfDay;
             DateTime endTime = endTime2.Value.Date + endTime1.Value.TimeOfDay;

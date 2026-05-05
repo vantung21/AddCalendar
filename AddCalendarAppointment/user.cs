@@ -18,7 +18,6 @@ namespace AddCalendarAppointment
         public user()
         {
             this.appointments = new HashSet<appointment>();
-            this.appointments1 = new HashSet<appointment>();
             this.members = new HashSet<member>();
         }
     
@@ -28,8 +27,6 @@ namespace AddCalendarAppointment
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<appointment> appointments { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<appointment> appointments1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<member> members { get; set; }
     }
