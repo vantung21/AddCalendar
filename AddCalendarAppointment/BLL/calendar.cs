@@ -54,15 +54,14 @@ namespace AddCalendarAppointment.BLL
             }
         }
 
-        public (int type, int appointmentId) checkConflict(string title, string location, DateTime startTime, DateTime endTime)
+        public (int type, int[] appointmentId) checkConflict(string title, string location, DateTime startTime, DateTime endTime)
         {
             //kiểm tra xem có cuộc hẹn nào của userID bị trùng với khoảng thời gian đã chọn hay không
             var conflict = entity.appointments
-                .Where(a => a.user_id == userID && a.start_time < endTime && a.end_time > startTime)
-                .FirstOrDefault();
-            if (conflict != null)
+                .Where(a => a.user_id == userID && a.start_time < endTime && a.end_time > startTime);
+            if (conflict != null && conflict.Any()) 
             {
-                return (1, conflict.id); //có cuộc hẹn bị trùng
+                return (1, conflict.Select(a => a.id).ToArray()); //có cuộc hẹn bị trùng
             }
 
             //kiểm tra có cuộc họp nhóm nào mà userID tham gia bị trùng với khoảng thời gian đã chọn hay không
@@ -76,7 +75,7 @@ namespace AddCalendarAppointment.BLL
                 .FirstOrDefault();
             if (groupConflict != null)
             {
-                return (1, groupConflict.id); //có cuộc họp nhóm bị trùng
+                return (1, new int[] { groupConflict.id }); //có cuộc họp nhóm bị trùng
             }
 
             //kiểm  tra xem có cuộc hẹn nhóm nào có cùng tên, thời gian bắt đầu và kết thúc trùng với cuộc hẹn mới hay không và user chưa tham gia cuộc họp nhóm đó
@@ -85,10 +84,10 @@ namespace AddCalendarAppointment.BLL
                 .FirstOrDefault();
             if (duplicateGroupMeeting != null)
             {
-                return (2, duplicateGroupMeeting.id); //có cuộc họp nhóm trùng lặp
+                return (2, new int[] { duplicateGroupMeeting.id }); //có cuộc họp nhóm trùng lặp
             }
 
-            return (0, -1); //không có cuộc hẹn hoặc cuộc họp nhóm nào bị trùng
+            return (0, new int[] { -1 }); //không có cuộc hẹn hoặc cuộc họp nhóm nào bị trùng
         }
 
         public bool addAppointment(string title, string location, string reminderStr, string type, DateTime startTime, DateTime endTime)

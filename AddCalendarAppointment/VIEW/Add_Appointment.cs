@@ -70,7 +70,7 @@ namespace AddCalendarAppointment.VIEW
             var conflictResult = calendarBLL.checkConflict(title, location, startTime, endTime);
             if (conflictResult.type == 1)
             {
-                DialogResult result = MessageBox.Show("Có cuộc hẹn bị trùng bạn có muốn thay thế cuộc hẹn đó không", "Trùng lịch", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                DialogResult result = MessageBox.Show("Có " + conflictResult.appointmentId.Length + " cuộc hẹn bị trùng bạn có muốn thay thế cuộc hẹn đó không", "Trùng lịch", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
                 if (result == DialogResult.No)
                 {
                     return;
@@ -78,7 +78,12 @@ namespace AddCalendarAppointment.VIEW
                 else
                 {
                     // Thay thế cuộc hẹn trùng lặp bằng cuộc hẹn mới
-                    bool removeResult = calendarBLL.removeAppointment(conflictResult.appointmentId);
+
+                    bool removeResult = false;
+                    foreach (var appointmentId in conflictResult.appointmentId)
+                    {
+                        removeResult = calendarBLL.removeAppointment(appointmentId);
+                    }
                     if (removeResult)
                     {
                         bool addResult = calendarBLL.addAppointment(title, location, reminder, type, startTime, endTime);
@@ -104,7 +109,7 @@ namespace AddCalendarAppointment.VIEW
                 else
                 {
                     // Tham gia cuộc họp nhóm trùng lặp
-                    bool joinResult = calendarBLL.joinGroupMeeting(conflictResult.appointmentId);
+                    bool joinResult = calendarBLL.joinGroupMeeting(conflictResult.appointmentId[0]);
                     if (joinResult)
                     {
                         MessageBox.Show("Bạn đã tham gia cuộc họp nhóm thành công", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
