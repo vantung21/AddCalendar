@@ -7,7 +7,7 @@
       <Diagram DiagramId="554b9e5ee2ac4680a731a0b3751650e3" Name="Diagram1">
         <EntityTypeShape EntityType="calendarDBModel.appointment" Width="1.5" PointX="3" PointY="1.875" />
         <EntityTypeShape EntityType="calendarDBModel.member" Width="1.5" PointX="5.25" PointY="2.375" />
-        <EntityTypeShape EntityType="calendarDBModel.reminder" Width="1.5" PointX="5.25" PointY="5.125" />
+        <EntityTypeShape EntityType="calendarDBModel.reminder" Width="1.5" PointX="7.875" PointY="4" />
         <EntityTypeShape EntityType="calendarDBModel.user" Width="1.5" PointX="0.75" PointY="2.375" />
         <AssociationConnector Association="calendarDBModel.FK__appointme__user___3B75D760" />
         <AssociationConnector Association="calendarDBModel.FK__members__appoint__3F466844" />

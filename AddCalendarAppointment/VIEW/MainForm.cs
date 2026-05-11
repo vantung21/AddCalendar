@@ -37,6 +37,11 @@ namespace AddCalendarAppointment.VIEW
 
         private void button1_Click(object sender, EventArgs e)
         {
+            DialogResult dialogResult = MessageBox.Show("Bạn có muốn xóa cuộc hẹn này không?", "Xác nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if(dialogResult == DialogResult.No)
+            {
+                return;
+            }
             calendar calendarBLL = new calendar();
             if(dataGridView1.SelectedRows.Count == 1)
             {
@@ -46,7 +51,7 @@ namespace AddCalendarAppointment.VIEW
                     dataGridView1.DataSource = calendarBLL.loadAppointment(radioGroup.Checked ? radioGroup.Text : radioAppoint.Text);
                     dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
                 }
-                MessageBox.Show(result ? "Appointment removed successfully." : "Failed to remove appointment.");
+                MessageBox.Show(result ? "Xoá cuộc hẹn thành công." : "Lỗi không thể xoá cuộc hẹn này!.");
             }
         }
 
@@ -54,7 +59,7 @@ namespace AddCalendarAppointment.VIEW
         {
 
             calendar calendarBLL = new calendar();
-
+            
             if(dataGridView1.SelectedRows.Count == 1)
             {
                 int appointmentId = (int)dataGridView1.SelectedRows[0].Cells["Id"].Value;

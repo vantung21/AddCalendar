@@ -28,6 +28,7 @@ namespace AddCalendarAppointment.VIEW
         {
             comboBox1.Items.AddRange(new string[] 
             {
+                "không",
                 "trước 30 phút",
                 "trước 1 giờ",
                 "trước 2 giờ",

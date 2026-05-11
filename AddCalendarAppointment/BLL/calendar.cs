@@ -17,7 +17,7 @@ namespace AddCalendarAppointment.BLL
             if (type == "Appointment")
             {
                 var appointments = entity.appointments
-                .Where(a => a.user_id == userID)  // Lọc theo user_id
+                .Where(a => a.user_id == userID && a.is_group_meeting == false)  // Lọc theo user_id
                 .Select(p => new { p.id, p.title, p.start_time, })
                 .AsEnumerable()  // Chuyển từ LINQ to Entities sang LINQ to Objects
                 .Select(p => new appointmentView()
